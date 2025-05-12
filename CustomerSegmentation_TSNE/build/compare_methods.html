@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>So sánh phương pháp - Phân tích khách hàng</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+        .navbar {
+            background-color: #0d6efd;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .navbar-brand {
+            font-weight: bold;
+            color: white !important;
+        }
+        .nav-link {
+            color: rgba(255, 255, 255, 0.85) !important;
+            font-weight: 500;
+        }
+        .nav-link:hover {
+            color: white !important;
+        }
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            border: none;
+        }
+        .card-header {
+            background-color: #f1f8ff;
+            border-bottom: 1px solid #e3f2fd;
+            font-weight: bold;
+            border-top-left-radius: 10px !important;
+            border-top-right-radius: 10px !important;
+        }
+        .btn-primary {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+        }
+        .btn-primary:hover {
+            background-color: #0b5ed7;
+            border-color: #0a58ca;
+        }
+        .table {
+            background-color: white;
+        }
+        .footer {
+            background-color: #f8f9fa;
+            padding: 20px 0;
+            margin-top: 40px;
+            border-top: 1px solid #e9ecef;
+        }
+        .plot-container {
+            width: 100%;
+            height: 500px;
+            margin-bottom: 20px;
+        }
+        .step-container {
+            position: relative;
+            padding-left: 40px;
+            margin-bottom: 20px;
+        }
+        .step-number {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 30px;
+            height: 30px;
+            background-color: #0d6efd;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        .image-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .gallery-item {
+            width: calc(33.333% - 10px);
+            margin-bottom: 15px;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        @media (max-width: 768px) {
+            .gallery-item {
+                width: calc(50% - 7.5px);
+            }
+        }
+        @media (max-width: 576px) {
+            .gallery-item {
+                width: 100%;
+            }
+        }
+    </style>
+    
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-chart-pie me-2"></i>Phân tích khách hàng
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-home me-1"></i>Trang chủ
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="preprocess.html">
+                            <i class="fas fa-filter me-1"></i>Tiền xử lý
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="clustering.html">
+                            <i class="fas fa-object-group me-1"></i>Phân cụm
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="compare_methods.html">
+                            <i class="fas fa-balance-scale me-1"></i>So sánh
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">
+                            <i class="fas fa-info-circle me-1"></i>Giới thiệu
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mb-5">
+        
+<div class="row">
+    <div class="col-md-12 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-balance-scale me-2"></i>So sánh t-SNE và PCA
+            </div>
+            <div class="card-body">
+                <h4 class="mb-4">So sánh hiệu quả của t-SNE và PCA</h4>
+                
+                <div class="row">
+                    <div class="col-md-12 mb-4">
+                        <div id="comparison-chart" class="plot-container"></div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <h5>Bảng so sánh</h5>
+                        <div class="table-responsive">
+                            <table border="1" class="dataframe table table-striped">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Method</th>
+      <th>Silhouette Score</th>
+      <th>Davies-Bouldin Index</th>
+      <th>Calinski-Harabasz Index</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>t-SNE</td>
+      <td>0.75</td>
+      <td>0.45</td>
+      <td>250</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>PCA</td>
+      <td>0.65</td>
+      <td>0.55</td>
+      <td>200</td>
+    </tr>
+  </tbody>
+</table>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">t-SNE</div>
+                            <div class="card-body">
+                                <h6>Ưu điểm</h6>
+                                <ul>
+                                    <li>Bảo toàn cấu trúc cục bộ của dữ liệu</li>
+                                    <li>Hiệu quả trong việc trực quan hóa dữ liệu nhiều chiều</li>
+                                    <li>Phát hiện tốt các mẫu và cụm trong dữ liệu</li>
+                                    <li>Xử lý tốt dữ liệu phi tuyến</li>
+                                </ul>
+                                
+                                <h6>Nhược điểm</h6>
+                                <ul>
+                                    <li>Không bảo toàn khoảng cách toàn cục</li>
+                                    <li>Kết quả phụ thuộc vào tham số perplexity</li>
+                                    <li>Tốn nhiều tài nguyên tính toán</li>
+                                    <li>Không phù hợp cho dữ liệu rất lớn</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">PCA</div>
+                            <div class="card-body">
+                                <h6>Ưu điểm</h6>
+                                <ul>
+                                    <li>Bảo toàn phương sai toàn cục</li>
+                                    <li>Hiệu quả tính toán cao</li>
+                                    <li>Dễ giải thích và triển khai</li>
+                                    <li>Phù hợp cho dữ liệu lớn</li>
+                                </ul>
+                                
+                                <h6>Nhược điểm</h6>
+                                <ul>
+                                    <li>Chỉ phát hiện mối quan hệ tuyến tính</li>
+                                    <li>Không hiệu quả với dữ liệu phức tạp, phi tuyến</li>
+                                    <li>Có thể bỏ qua các mẫu cục bộ quan trọng</li>
+                                    <li>Nhạy cảm với nhiễu và ngoại lai</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">Kết luận</div>
+                            <div class="card-body">
+                                <p>Dựa trên các chỉ số đánh giá và kết quả trực quan hóa, có thể rút ra một số kết luận sau:</p>
+                                
+                                <ul>
+                                    <li><strong>Silhouette Score</strong>: Chỉ số này đo lường mức độ tương đồng của một đối tượng với cụm của nó so với các cụm khác. Giá trị cao hơn cho thấy phân cụm tốt hơn.</li>
+                                    <li><strong>Davies-Bouldin Index</strong>: Chỉ số này đo lường sự phân tách trung bình giữa các cụm. Giá trị thấp hơn cho thấy phân cụm tốt hơn.</li>
+                                    <li><strong>Calinski-Harabasz Index</strong>: Chỉ số này đo lường tỷ lệ giữa phương sai giữa các cụm và phương sai trong cụm. Giá trị cao hơn cho thấy phân cụm tốt hơn.</li>
+                                </ul>
+                                
+                                <p>Nhìn chung, t-SNE thường hiệu quả hơn PCA trong việc phát hiện cấu trúc cục bộ và phân cụm dữ liệu khách hàng, đặc biệt khi dữ liệu có mối quan hệ phi tuyến. Tuy nhiên, PCA có ưu điểm về tốc độ tính toán và khả năng giải thích.</p>
+                                
+                                <p>Trong phân tích khách hàng, việc kết hợp cả hai phương pháp có thể mang lại kết quả tốt nhất: sử dụng PCA để giảm nhiễu và giảm chiều ban đầu, sau đó áp dụng t-SNE để trực quan hóa và phân cụm.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer mt-auto">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Phân tích khách hàng với t-SNE và K-means</h5>
+                    <p>Ứng dụng kỹ thuật giảm chiều dữ liệu bằng t-SNE trong phân tích dữ liệu khách hàng</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p>&copy; 2024 - Đồ án Khai phá dữ liệu</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var graphJSON = {"data": [{"marker": {"color": "rgb(55, 83, 109)"}, "name": "Silhouette Score (cao h\u01a1n t\u1ed1t h\u01a1n)", "x": ["t-SNE", "PCA"], "y": {"dtype": "f8", "bdata": "AAAAAAAA6D/NzMzMzMzkPw=="}, "type": "bar"}, {"marker": {"color": "rgb(26, 118, 255)"}, "name": "Davies-Bouldin Index (th\u1ea5p h\u01a1n t\u1ed1t h\u01a1n)", "x": ["t-SNE", "PCA"], "y": {"dtype": "f8", "bdata": "zczMzMzM3D+amZmZmZnhPw=="}, "type": "bar"}, {"marker": {"color": "rgb(0, 204, 150)"}, "name": "Calinski-Harabasz Index (cao h\u01a1n t\u1ed1t h\u01a1n)", "x": ["t-SNE", "PCA"], "y": {"dtype": "i2", "bdata": "+gDIAA=="}, "type": "bar"}], "layout": {"template": {"data": {"histogram2dcontour": [{"type": "histogram2dcontour", "colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]]}], "choropleth": [{"type": "choropleth", "colorbar": {"outlinewidth": 0, "ticks": ""}}], "histogram2d": [{"type": "histogram2d", "colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]]}], "heatmap": [{"type": "heatmap", "colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]]}], "contourcarpet": [{"type": "contourcarpet", "colorbar": {"outlinewidth": 0, "ticks": ""}}], "contour": [{"type": "contour", "colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]]}], "surface": [{"type": "surface", "colorbar": {"outlinewidth": 0, "ticks": ""}, "colorscale": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]]}], "mesh3d": [{"type": "mesh3d", "colorbar": {"outlinewidth": 0, "ticks": ""}}], "scatter": [{"fillpattern": {"fillmode": "overlay", "size": 10, "solidity": 0.2}, "type": "scatter"}], "parcoords": [{"type": "parcoords", "line": {"colorbar": {"outlinewidth": 0, "ticks": ""}}}], "scatterpolargl": [{"type": "scatterpolargl", "marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}}], "bar": [{"error_x": {"color": "#2a3f5f"}, "error_y": {"color": "#2a3f5f"}, "marker": {"line": {"color": "#E5ECF6", "width": 0.5}, "pattern": {"fillmode": "overlay", "size": 10, "solidity": 0.2}}, "type": "bar"}], "scattergeo": [{"type": "scattergeo", "marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}}], "scatterpolar": [{"type": "scatterpolar", "marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}}], "histogram": [{"marker": {"pattern": {"fillmode": "overlay", "size": 10, "solidity": 0.2}}, "type": "histogram"}], "scattergl": [{"type": "scattergl", "marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}}], "scatter3d": [{"type": "scatter3d", "line": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}}], "scattermap": [{"type": "scattermap", "marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}}], "scattermapbox": [{"type": "scattermapbox", "marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}}], "scatterternary": [{"type": "scatterternary", "marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}}], "scattercarpet": [{"type": "scattercarpet", "marker": {"colorbar": {"outlinewidth": 0, "ticks": ""}}}], "carpet": [{"aaxis": {"endlinecolor": "#2a3f5f", "gridcolor": "white", "linecolor": "white", "minorgridcolor": "white", "startlinecolor": "#2a3f5f"}, "baxis": {"endlinecolor": "#2a3f5f", "gridcolor": "white", "linecolor": "white", "minorgridcolor": "white", "startlinecolor": "#2a3f5f"}, "type": "carpet"}], "table": [{"cells": {"fill": {"color": "#EBF0F8"}, "line": {"color": "white"}}, "header": {"fill": {"color": "#C8D4E3"}, "line": {"color": "white"}}, "type": "table"}], "barpolar": [{"marker": {"line": {"color": "#E5ECF6", "width": 0.5}, "pattern": {"fillmode": "overlay", "size": 10, "solidity": 0.2}}, "type": "barpolar"}], "pie": [{"automargin": true, "type": "pie"}]}, "layout": {"autotypenumbers": "strict", "colorway": ["#636efa", "#EF553B", "#00cc96", "#ab63fa", "#FFA15A", "#19d3f3", "#FF6692", "#B6E880", "#FF97FF", "#FECB52"], "font": {"color": "#2a3f5f"}, "hovermode": "closest", "hoverlabel": {"align": "left"}, "paper_bgcolor": "white", "plot_bgcolor": "#E5ECF6", "polar": {"bgcolor": "#E5ECF6", "angularaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "radialaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}}, "ternary": {"bgcolor": "#E5ECF6", "aaxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "baxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}, "caxis": {"gridcolor": "white", "linecolor": "white", "ticks": ""}}, "coloraxis": {"colorbar": {"outlinewidth": 0, "ticks": ""}}, "colorscale": {"sequential": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "sequentialminus": [[0.0, "#0d0887"], [0.1111111111111111, "#46039f"], [0.2222222222222222, "#7201a8"], [0.3333333333333333, "#9c179e"], [0.4444444444444444, "#bd3786"], [0.5555555555555556, "#d8576b"], [0.6666666666666666, "#ed7953"], [0.7777777777777778, "#fb9f3a"], [0.8888888888888888, "#fdca26"], [1.0, "#f0f921"]], "diverging": [[0, "#8e0152"], [0.1, "#c51b7d"], [0.2, "#de77ae"], [0.3, "#f1b6da"], [0.4, "#fde0ef"], [0.5, "#f7f7f7"], [0.6, "#e6f5d0"], [0.7, "#b8e186"], [0.8, "#7fbc41"], [0.9, "#4d9221"], [1, "#276419"]]}, "xaxis": {"gridcolor": "white", "linecolor": "white", "ticks": "", "title": {"standoff": 15}, "zerolinecolor": "white", "automargin": true, "zerolinewidth": 2}, "yaxis": {"gridcolor": "white", "linecolor": "white", "ticks": "", "title": {"standoff": 15}, "zerolinecolor": "white", "automargin": true, "zerolinewidth": 2}, "scene": {"xaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white", "gridwidth": 2}, "yaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white", "gridwidth": 2}, "zaxis": {"backgroundcolor": "#E5ECF6", "gridcolor": "white", "linecolor": "white", "showbackground": true, "ticks": "", "zerolinecolor": "white", "gridwidth": 2}}, "shapedefaults": {"line": {"color": "#2a3f5f"}}, "annotationdefaults": {"arrowcolor": "#2a3f5f", "arrowhead": 0, "arrowwidth": 1}, "geo": {"bgcolor": "white", "landcolor": "#E5ECF6", "subunitcolor": "white", "showland": true, "showlakes": true, "lakecolor": "white"}, "title": {"x": 0.05}, "mapbox": {"style": "light"}}}, "title": {"text": "So s\u00e1nh t-SNE v\u00e0 PCA"}, "xaxis": {"title": {"text": "Ph\u01b0\u01a1ng ph\u00e1p"}}, "yaxis": {"title": {"text": "Gi\u00e1 tr\u1ecb"}}, "barmode": "group"}};
+        Plotly.newPlot('comparison-chart', graphJSON.data, graphJSON.layout);
+    });
+</script>
+
+</body>
+</html>

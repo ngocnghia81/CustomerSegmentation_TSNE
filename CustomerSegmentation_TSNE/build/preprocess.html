@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiền xử lý dữ liệu - Phân tích khách hàng</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+        .navbar {
+            background-color: #0d6efd;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .navbar-brand {
+            font-weight: bold;
+            color: white !important;
+        }
+        .nav-link {
+            color: rgba(255, 255, 255, 0.85) !important;
+            font-weight: 500;
+        }
+        .nav-link:hover {
+            color: white !important;
+        }
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            border: none;
+        }
+        .card-header {
+            background-color: #f1f8ff;
+            border-bottom: 1px solid #e3f2fd;
+            font-weight: bold;
+            border-top-left-radius: 10px !important;
+            border-top-right-radius: 10px !important;
+        }
+        .btn-primary {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+        }
+        .btn-primary:hover {
+            background-color: #0b5ed7;
+            border-color: #0a58ca;
+        }
+        .table {
+            background-color: white;
+        }
+        .footer {
+            background-color: #f8f9fa;
+            padding: 20px 0;
+            margin-top: 40px;
+            border-top: 1px solid #e9ecef;
+        }
+        .plot-container {
+            width: 100%;
+            height: 500px;
+            margin-bottom: 20px;
+        }
+        .step-container {
+            position: relative;
+            padding-left: 40px;
+            margin-bottom: 20px;
+        }
+        .step-number {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 30px;
+            height: 30px;
+            background-color: #0d6efd;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        .image-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .gallery-item {
+            width: calc(33.333% - 10px);
+            margin-bottom: 15px;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        @media (max-width: 768px) {
+            .gallery-item {
+                width: calc(50% - 7.5px);
+            }
+        }
+        @media (max-width: 576px) {
+            .gallery-item {
+                width: 100%;
+            }
+        }
+    </style>
+    
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-chart-pie me-2"></i>Phân tích khách hàng
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-home me-1"></i>Trang chủ
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="preprocess.html">
+                            <i class="fas fa-filter me-1"></i>Tiền xử lý
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="clustering.html">
+                            <i class="fas fa-object-group me-1"></i>Phân cụm
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="compare_methods.html">
+                            <i class="fas fa-balance-scale me-1"></i>So sánh
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">
+                            <i class="fas fa-info-circle me-1"></i>Giới thiệu
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mb-5">
+        
+<div class="row">
+    <div class="col-md-12 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-filter me-2"></i>Tiền xử lý dữ liệu khách hàng
+            </div>
+            <div class="card-body">
+                <h4 class="mb-4">Tiền xử lý dữ liệu khách hàng São Paulo</h4>
+                
+                <div class="step-container">
+                    <div class="step-number">1</div>
+                    <h5>Làm sạch dữ liệu</h5>
+                    <p>Xử lý giá trị thiếu trong dữ liệu bằng KNN Imputer cho đặc trưng số và điền giá trị phổ biến nhất cho đặc trưng phân loại.</p>
+                </div>
+                
+                <div class="step-container">
+                    <div class="step-number">2</div>
+                    <h5>Phát hiện và xử lý ngoại lai</h5>
+                    <p>Sử dụng thuật toán Isolation Forest để phát hiện và xử lý các điểm dữ liệu ngoại lai.</p>
+                </div>
+                
+                <div class="step-container">
+                    <div class="step-number">3</div>
+                    <h5>Mã hóa đặc trưng phân loại</h5>
+                    <p>Sử dụng One-Hot Encoding để mã hóa các đặc trưng phân loại như Gender, EducationLevel, MaritalStatus, v.v.</p>
+                </div>
+                
+                <div class="step-container">
+                    <div class="step-number">4</div>
+                    <h5>Chuẩn hóa đặc trưng số</h5>
+                    <p>Sử dụng StandardScaler để chuẩn hóa các đặc trưng số như Income, SpendingScore, PurchaseFrequency, v.v.</p>
+                </div>
+                
+                <form method="post" class="mt-4">
+                    <div class="d-grid gap-2 col-md-6 mx-auto">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-play me-2"></i>Bắt đầu tiền xử lý dữ liệu
+                        </button>
+                        <p class="text-muted text-center mt-2">Quá trình này có thể mất vài phút tùy thuộc vào kích thước dữ liệu.</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-info-circle me-2"></i>Thông tin về dữ liệu khách hàng
+            </div>
+            <div class="card-body">
+                <h5>Dữ liệu khách hàng São Paulo</h5>
+                <p>Dữ liệu khách hàng bao gồm các thông tin sau:</p>
+                <ul>
+                    <li><strong>CustomerID</strong>: Mã khách hàng</li>
+                    <li><strong>Gender</strong>: Giới tính (Nam/Nữ)</li>
+                    <li><strong>Income</strong>: Thu nhập</li>
+                    <li><strong>SpendingScore</strong>: Điểm chi tiêu</li>
+                    <li><strong>EducationLevel</strong>: Trình độ học vấn</li>
+                    <li><strong>MaritalStatus</strong>: Tình trạng hôn nhân</li>
+                    <li><strong>PurchaseFrequency</strong>: Tần suất mua hàng</li>
+                    <li><strong>ProductCategory</strong>: Danh mục sản phẩm ưa thích</li>
+                    <li><strong>LoyaltyScore</strong>: Điểm trung thành</li>
+                    <li><strong>EmploymentStatus</strong>: Tình trạng việc làm</li>
+                    <li><strong>HouseholdSize</strong>: Quy mô hộ gia đình</li>
+                    <li><strong>CreditScore</strong>: Điểm tín dụng</li>
+                    <li><strong>OnlineShoppingHabit</strong>: Thói quen mua sắm trực tuyến</li>
+                    <li><strong>DiscountSensitivity</strong>: Độ nhạy cảm với giảm giá</li>
+                    <li><strong>PreferredPaymentMethod</strong>: Phương thức thanh toán ưa thích</li>
+                    <li><strong>SubscriptionStatus</strong>: Trạng thái đăng ký</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer mt-auto">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Phân tích khách hàng với t-SNE và K-means</h5>
+                    <p>Ứng dụng kỹ thuật giảm chiều dữ liệu bằng t-SNE trong phân tích dữ liệu khách hàng</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p>&copy; 2024 - Đồ án Khai phá dữ liệu</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    
+</body>
+</html>

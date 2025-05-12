@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giới thiệu - Phân tích khách hàng</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+        .navbar {
+            background-color: #0d6efd;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .navbar-brand {
+            font-weight: bold;
+            color: white !important;
+        }
+        .nav-link {
+            color: rgba(255, 255, 255, 0.85) !important;
+            font-weight: 500;
+        }
+        .nav-link:hover {
+            color: white !important;
+        }
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            border: none;
+        }
+        .card-header {
+            background-color: #f1f8ff;
+            border-bottom: 1px solid #e3f2fd;
+            font-weight: bold;
+            border-top-left-radius: 10px !important;
+            border-top-right-radius: 10px !important;
+        }
+        .btn-primary {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+        }
+        .btn-primary:hover {
+            background-color: #0b5ed7;
+            border-color: #0a58ca;
+        }
+        .table {
+            background-color: white;
+        }
+        .footer {
+            background-color: #f8f9fa;
+            padding: 20px 0;
+            margin-top: 40px;
+            border-top: 1px solid #e9ecef;
+        }
+        .plot-container {
+            width: 100%;
+            height: 500px;
+            margin-bottom: 20px;
+        }
+        .step-container {
+            position: relative;
+            padding-left: 40px;
+            margin-bottom: 20px;
+        }
+        .step-number {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 30px;
+            height: 30px;
+            background-color: #0d6efd;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        .image-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .gallery-item {
+            width: calc(33.333% - 10px);
+            margin-bottom: 15px;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        @media (max-width: 768px) {
+            .gallery-item {
+                width: calc(50% - 7.5px);
+            }
+        }
+        @media (max-width: 576px) {
+            .gallery-item {
+                width: 100%;
+            }
+        }
+    </style>
+    
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-chart-pie me-2"></i>Phân tích khách hàng
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-home me-1"></i>Trang chủ
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="preprocess.html">
+                            <i class="fas fa-filter me-1"></i>Tiền xử lý
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="clustering.html">
+                            <i class="fas fa-object-group me-1"></i>Phân cụm
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="compare_methods.html">
+                            <i class="fas fa-balance-scale me-1"></i>So sánh
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">
+                            <i class="fas fa-info-circle me-1"></i>Giới thiệu
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mb-5">
+        
+<div class="row">
+    <div class="col-md-12 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-info-circle me-2"></i>Giới thiệu về dự án
+            </div>
+            <div class="card-body">
+                <h4 class="mb-4">Phân tích khách hàng với t-SNE và K-means</h4>
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <h5>Tổng quan dự án</h5>
+                        <p>Dự án này áp dụng kỹ thuật giảm chiều dữ liệu t-SNE (t-distributed Stochastic Neighbor Embedding) kết hợp với thuật toán phân cụm K-means để phân tích dữ liệu khách hàng São Paulo. Mục tiêu chính là phân khúc khách hàng thành các nhóm có đặc điểm tương đồng, từ đó giúp doanh nghiệp hiểu rõ hơn về khách hàng và đưa ra các chiến lược marketing phù hợp.</p>
+                        
+                        <h5 class="mt-4">Các kỹ thuật được sử dụng</h5>
+                        <ul>
+                            <li><strong>Tiền xử lý dữ liệu</strong>: Làm sạch dữ liệu, xử lý giá trị thiếu, phát hiện ngoại lai, mã hóa đặc trưng phân loại, chuẩn hóa đặc trưng số.</li>
+                            <li><strong>Giảm chiều dữ liệu</strong>: Áp dụng t-SNE và PCA để giảm chiều dữ liệu từ nhiều thuộc tính xuống 2 chiều.</li>
+                            <li><strong>Phân cụm</strong>: Sử dụng K-means để phân cụm khách hàng trên dữ liệu đã giảm chiều.</li>
+                            <li><strong>Đánh giá</strong>: So sánh hiệu quả của t-SNE và PCA thông qua các chỉ số Silhouette Score, Davies-Bouldin Index, Calinski-Harabasz Index.</li>
+                            <li><strong>Trực quan hóa</strong>: Sử dụng các biểu đồ tương tác để trực quan hóa kết quả phân cụm và đặc điểm của các phân khúc khách hàng.</li>
+                        </ul>
+                        
+                        <h5 class="mt-4">Ứng dụng thực tế</h5>
+                        <p>Kết quả phân khúc khách hàng có thể được ứng dụng trong nhiều lĩnh vực:</p>
+                        <ul>
+                            <li><strong>Marketing cá nhân hóa</strong>: Xây dựng chiến dịch marketing phù hợp với từng phân khúc khách hàng.</li>
+                            <li><strong>Phát triển sản phẩm</strong>: Thiết kế sản phẩm/dịch vụ đáp ứng nhu cầu của từng phân khúc.</li>
+                            <li><strong>Quản lý quan hệ khách hàng</strong>: Cải thiện trải nghiệm khách hàng dựa trên đặc điểm của từng phân khúc.</li>
+                            <li><strong>Dự đoán hành vi</strong>: Xây dựng mô hình dự đoán hành vi khách hàng dựa trên phân khúc.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">t-SNE</div>
+                            <div class="card-body">
+                                <p>t-SNE (t-distributed Stochastic Neighbor Embedding) là một kỹ thuật giảm chiều phi tuyến được phát triển bởi Laurens van der Maaten và Geoffrey Hinton vào năm 2008. Phương pháp này đặc biệt phù hợp để trực quan hóa dữ liệu nhiều chiều.</p>
+                                
+                                <p>Nguyên lý hoạt động:</p>
+                                <ol>
+                                    <li>Chuyển đổi khoảng cách Euclidean giữa các điểm dữ liệu thành xác suất có điều kiện, biểu thị khả năng một điểm dữ liệu chọn điểm khác làm láng giềng.</li>
+                                    <li>Tạo ra một ánh xạ tương tự trong không gian thấp hơn (thường là 2D hoặc 3D).</li>
+                                    <li>Tối thiểu hóa sự khác biệt giữa hai phân phối xác suất bằng cách sử dụng phân kỳ Kullback-Leibler.</li>
+                                </ol>
+                                
+                                <p>t-SNE sử dụng phân phối t với một bậc tự do trong không gian thấp hơn, giúp giải quyết vấn đề "crowding problem" - hiện tượng các điểm dữ liệu bị nén chặt vào nhau trong không gian thấp chiều.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">K-means</div>
+                            <div class="card-body">
+                                <p>K-means là một thuật toán phân cụm phổ biến nhằm chia dữ liệu thành K cụm khác nhau. Mỗi điểm dữ liệu thuộc về cụm có trung tâm (centroid) gần nhất.</p>
+                                
+                                <p>Thuật toán K-means:</p>
+                                <ol>
+                                    <li>Khởi tạo K tâm cụm ngẫu nhiên.</li>
+                                    <li>Gán mỗi điểm dữ liệu vào cụm có tâm gần nhất (dựa trên khoảng cách Euclidean).</li>
+                                    <li>Cập nhật tâm cụm bằng cách tính trung bình của tất cả các điểm trong cụm.</li>
+                                    <li>Lặp lại bước 2 và 3 cho đến khi các tâm cụm không thay đổi nhiều hoặc đạt đến số lần lặp tối đa.</li>
+                                </ol>
+                                
+                                <p>K-means có ưu điểm là đơn giản, hiệu quả và dễ triển khai. Tuy nhiên, nó cũng có một số hạn chế như nhạy cảm với điểm khởi tạo, yêu cầu xác định trước số cụm K, và giả định rằng các cụm có hình dạng hình cầu và kích thước tương đương nhau.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">Tài liệu tham khảo</div>
+                            <div class="card-body">
+                                <ul>
+                                    <li>van der Maaten, L., & Hinton, G. (2008). Visualizing data using t-SNE. Journal of Machine Learning Research, 9, 2579-2605.</li>
+                                    <li>MacQueen, J. (1967). Some methods for classification and analysis of multivariate observations. Proceedings of the Fifth Berkeley Symposium on Mathematical Statistics and Probability, 1, 281-297.</li>
+                                    <li>Scikit-learn: Machine Learning in Python, Pedregosa et al., JMLR 12, pp. 2825-2830, 2011.</li>
+                                    <li>Wattenberg, M., Viégas, F., & Johnson, I. (2016). How to use t-SNE effectively. Distill, 1(10), e2.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer mt-auto">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Phân tích khách hàng với t-SNE và K-means</h5>
+                    <p>Ứng dụng kỹ thuật giảm chiều dữ liệu bằng t-SNE trong phân tích dữ liệu khách hàng</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p>&copy; 2024 - Đồ án Khai phá dữ liệu</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    
+</body>
+</html>
