@@ -47,7 +47,7 @@ CustomerSegmentation_TSNE/
 1. Clone repository:
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/ngocnghia81/CustomerSegmentation_TSNE
 cd CustomerSegmentation_TSNE
 ```
 
