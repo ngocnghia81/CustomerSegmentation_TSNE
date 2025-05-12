@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block title %}So sánh phương pháp - Phân tích khách hàng{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-balance-scale me-2"></i>So sánh t-SNE và PCA
+            </div>
+            <div class="card-body">
+                <h4 class="mb-4">So sánh hiệu quả của t-SNE và PCA</h4>
+                
+                <div class="row">
+                    <div class="col-md-12 mb-4">
+                        <div id="comparison-chart" class="plot-container"></div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <h5>Bảng so sánh</h5>
+                        <div class="table-responsive">
+                            {{ comparison|safe }}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">t-SNE</div>
+                            <div class="card-body">
+                                <h6>Ưu điểm</h6>
+                                <ul>
+                                    <li>Bảo toàn cấu trúc cục bộ của dữ liệu</li>
+                                    <li>Hiệu quả trong việc trực quan hóa dữ liệu nhiều chiều</li>
+                                    <li>Phát hiện tốt các mẫu và cụm trong dữ liệu</li>
+                                    <li>Xử lý tốt dữ liệu phi tuyến</li>
+                                </ul>
+                                
+                                <h6>Nhược điểm</h6>
+                                <ul>
+                                    <li>Không bảo toàn khoảng cách toàn cục</li>
+                                    <li>Kết quả phụ thuộc vào tham số perplexity</li>
+                                    <li>Tốn nhiều tài nguyên tính toán</li>
+                                    <li>Không phù hợp cho dữ liệu rất lớn</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">PCA</div>
+                            <div class="card-body">
+                                <h6>Ưu điểm</h6>
+                                <ul>
+                                    <li>Bảo toàn phương sai toàn cục</li>
+                                    <li>Hiệu quả tính toán cao</li>
+                                    <li>Dễ giải thích và triển khai</li>
+                                    <li>Phù hợp cho dữ liệu lớn</li>
+                                </ul>
+                                
+                                <h6>Nhược điểm</h6>
+                                <ul>
+                                    <li>Chỉ phát hiện mối quan hệ tuyến tính</li>
+                                    <li>Không hiệu quả với dữ liệu phức tạp, phi tuyến</li>
+                                    <li>Có thể bỏ qua các mẫu cục bộ quan trọng</li>
+                                    <li>Nhạy cảm với nhiễu và ngoại lai</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">Kết luận</div>
+                            <div class="card-body">
+                                <p>Dựa trên các chỉ số đánh giá và kết quả trực quan hóa, có thể rút ra một số kết luận sau:</p>
+                                
+                                <ul>
+                                    <li><strong>Silhouette Score</strong>: Chỉ số này đo lường mức độ tương đồng của một đối tượng với cụm của nó so với các cụm khác. Giá trị cao hơn cho thấy phân cụm tốt hơn.</li>
+                                    <li><strong>Davies-Bouldin Index</strong>: Chỉ số này đo lường sự phân tách trung bình giữa các cụm. Giá trị thấp hơn cho thấy phân cụm tốt hơn.</li>
+                                    <li><strong>Calinski-Harabasz Index</strong>: Chỉ số này đo lường tỷ lệ giữa phương sai giữa các cụm và phương sai trong cụm. Giá trị cao hơn cho thấy phân cụm tốt hơn.</li>
+                                </ul>
+                                
+                                <p>Nhìn chung, t-SNE thường hiệu quả hơn PCA trong việc phát hiện cấu trúc cục bộ và phân cụm dữ liệu khách hàng, đặc biệt khi dữ liệu có mối quan hệ phi tuyến. Tuy nhiên, PCA có ưu điểm về tốc độ tính toán và khả năng giải thích.</p>
+                                
+                                <p>Trong phân tích khách hàng, việc kết hợp cả hai phương pháp có thể mang lại kết quả tốt nhất: sử dụng PCA để giảm nhiễu và giảm chiều ban đầu, sau đó áp dụng t-SNE để trực quan hóa và phân cụm.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var graphJSON = {{ graphJSON|safe }};
+        Plotly.newPlot('comparison-chart', graphJSON.data, graphJSON.layout);
+    });
+</script>
+{% endblock %}

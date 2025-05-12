@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+{% block title %}Phân cụm khách hàng - Phân tích khách hàng{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-object-group me-2"></i>Phân cụm khách hàng với t-SNE và K-means
+            </div>
+            <div class="card-body">
+                <h4 class="mb-4">Phân cụm khách hàng São Paulo</h4>
+                
+                <div class="step-container">
+                    <div class="step-number">1</div>
+                    <h5>Giảm chiều dữ liệu với t-SNE</h5>
+                    <p>Áp dụng t-SNE để giảm chiều dữ liệu khách hàng từ nhiều thuộc tính xuống 2 chiều để trực quan hóa.</p>
+                </div>
+                
+                <div class="step-container">
+                    <div class="step-number">2</div>
+                    <h5>So sánh với PCA</h5>
+                    <p>Áp dụng PCA để so sánh hiệu quả giảm chiều với t-SNE.</p>
+                </div>
+                
+                <div class="step-container">
+                    <div class="step-number">3</div>
+                    <h5>Tìm số cụm tối ưu</h5>
+                    <p>Sử dụng phương pháp Silhouette Score và Elbow Method để xác định số cụm tối ưu.</p>
+                </div>
+                
+                <div class="step-container">
+                    <div class="step-number">4</div>
+                    <h5>Phân cụm với K-means</h5>
+                    <p>Áp dụng thuật toán K-means để phân cụm khách hàng trên dữ liệu đã giảm chiều.</p>
+                </div>
+                
+                <div class="step-container">
+                    <div class="step-number">5</div>
+                    <h5>Phân tích đặc điểm của các cụm</h5>
+                    <p>Phân tích đặc điểm của từng phân khúc khách hàng để hiểu rõ hơn về hành vi và đặc điểm của họ.</p>
+                </div>
+                
+                <form method="post" class="mt-4">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="perplexity" class="form-label">Perplexity cho t-SNE</label>
+                                <input type="number" class="form-control" id="perplexity" name="perplexity" min="5" max="100" value="30">
+                                <div class="form-text">Perplexity là tham số quan trọng của t-SNE, thường từ 5 đến 50. Giá trị mặc định là 30.</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="n_clusters" class="form-label">Số cụm cho K-means</label>
+                                <input type="number" class="form-control" id="n_clusters" name="n_clusters" min="0" max="20" value="0">
+                                <div class="form-text">Để trống hoặc nhập 0 để tự động tìm số cụm tối ưu.</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2 col-md-6 mx-auto">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-play me-2"></i>Bắt đầu phân cụm
+                        </button>
+                        <p class="text-muted text-center mt-2">Quá trình này có thể mất vài phút tùy thuộc vào kích thước dữ liệu.</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-info-circle me-2"></i>Thông tin về t-SNE và K-means
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>t-SNE (t-distributed Stochastic Neighbor Embedding)</h5>
+                        <p>t-SNE là một kỹ thuật giảm chiều phi tuyến được sử dụng để trực quan hóa dữ liệu nhiều chiều. Nó chuyển đổi sự tương đồng giữa các cặp điểm dữ liệu thành xác suất và cố gắng tối thiểu hóa sự khác biệt giữa các phân phối xác suất.</p>
+                        
+                        <h6>Tham số Perplexity</h6>
+                        <p>Perplexity là tham số quan trọng của t-SNE, có thể được hiểu là số lượng láng giềng gần nhất mà thuật toán xem xét khi tối ưu hóa nhúng. Giá trị perplexity thường nằm trong khoảng từ 5 đến 50.</p>
+                        <ul>
+                            <li>Perplexity thấp: Tập trung vào cấu trúc cục bộ, có thể tạo ra nhiều cụm nhỏ</li>
+                            <li>Perplexity cao: Bảo toàn cấu trúc toàn cục, có thể gộp các cụm lại với nhau</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <h5>K-means</h5>
+                        <p>K-means là thuật toán phân cụm phổ biến nhằm chia dữ liệu thành K cụm khác nhau. Thuật toán hoạt động bằng cách:</p>
+                        <ol>
+                            <li>Khởi tạo K tâm cụm ngẫu nhiên</li>
+                            <li>Gán mỗi điểm dữ liệu vào cụm có tâm gần nhất</li>
+                            <li>Cập nhật tâm cụm bằng trung bình của các điểm trong cụm</li>
+                            <li>Lặp lại bước 2 và 3 cho đến khi hội tụ</li>
+                        </ol>
+                        
+                        <h6>Số cụm tối ưu</h6>
+                        <p>Việc xác định số cụm tối ưu là một bước quan trọng trong phân cụm. Các phương pháp phổ biến bao gồm:</p>
+                        <ul>
+                            <li>Elbow Method: Tìm điểm "khuỷu tay" trong biểu đồ tổng bình phương khoảng cách</li>
+                            <li>Silhouette Score: Đo lường mức độ tương đồng của một đối tượng với cụm của nó so với các cụm khác</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

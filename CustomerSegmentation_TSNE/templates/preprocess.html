@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %}Tiền xử lý dữ liệu - Phân tích khách hàng{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-filter me-2"></i>Tiền xử lý dữ liệu khách hàng
+            </div>
+            <div class="card-body">
+                <h4 class="mb-4">Tiền xử lý dữ liệu khách hàng São Paulo</h4>
+                
+                <div class="step-container">
+                    <div class="step-number">1</div>
+                    <h5>Làm sạch dữ liệu</h5>
+                    <p>Xử lý giá trị thiếu trong dữ liệu bằng KNN Imputer cho đặc trưng số và điền giá trị phổ biến nhất cho đặc trưng phân loại.</p>
+                </div>
+                
+                <div class="step-container">
+                    <div class="step-number">2</div>
+                    <h5>Phát hiện và xử lý ngoại lai</h5>
+                    <p>Sử dụng thuật toán Isolation Forest để phát hiện và xử lý các điểm dữ liệu ngoại lai.</p>
+                </div>
+                
+                <div class="step-container">
+                    <div class="step-number">3</div>
+                    <h5>Mã hóa đặc trưng phân loại</h5>
+                    <p>Sử dụng One-Hot Encoding để mã hóa các đặc trưng phân loại như Gender, EducationLevel, MaritalStatus, v.v.</p>
+                </div>
+                
+                <div class="step-container">
+                    <div class="step-number">4</div>
+                    <h5>Chuẩn hóa đặc trưng số</h5>
+                    <p>Sử dụng StandardScaler để chuẩn hóa các đặc trưng số như Income, SpendingScore, PurchaseFrequency, v.v.</p>
+                </div>
+                
+                <form method="post" class="mt-4">
+                    <div class="d-grid gap-2 col-md-6 mx-auto">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-play me-2"></i>Bắt đầu tiền xử lý dữ liệu
+                        </button>
+                        <p class="text-muted text-center mt-2">Quá trình này có thể mất vài phút tùy thuộc vào kích thước dữ liệu.</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-info-circle me-2"></i>Thông tin về dữ liệu khách hàng
+            </div>
+            <div class="card-body">
+                <h5>Dữ liệu khách hàng São Paulo</h5>
+                <p>Dữ liệu khách hàng bao gồm các thông tin sau:</p>
+                <ul>
+                    <li><strong>CustomerID</strong>: Mã khách hàng</li>
+                    <li><strong>Gender</strong>: Giới tính (Nam/Nữ)</li>
+                    <li><strong>Income</strong>: Thu nhập</li>
+                    <li><strong>SpendingScore</strong>: Điểm chi tiêu</li>
+                    <li><strong>EducationLevel</strong>: Trình độ học vấn</li>
+                    <li><strong>MaritalStatus</strong>: Tình trạng hôn nhân</li>
+                    <li><strong>PurchaseFrequency</strong>: Tần suất mua hàng</li>
+                    <li><strong>ProductCategory</strong>: Danh mục sản phẩm ưa thích</li>
+                    <li><strong>LoyaltyScore</strong>: Điểm trung thành</li>
+                    <li><strong>EmploymentStatus</strong>: Tình trạng việc làm</li>
+                    <li><strong>HouseholdSize</strong>: Quy mô hộ gia đình</li>
+                    <li><strong>CreditScore</strong>: Điểm tín dụng</li>
+                    <li><strong>OnlineShoppingHabit</strong>: Thói quen mua sắm trực tuyến</li>
+                    <li><strong>DiscountSensitivity</strong>: Độ nhạy cảm với giảm giá</li>
+                    <li><strong>PreferredPaymentMethod</strong>: Phương thức thanh toán ưa thích</li>
+                    <li><strong>SubscriptionStatus</strong>: Trạng thái đăng ký</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

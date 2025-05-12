@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block title %}Kết quả tiền xử lý dữ liệu - Phân tích khách hàng{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-check-circle me-2"></i>Kết quả tiền xử lý dữ liệu
+            </div>
+            <div class="card-body">
+                <div class="alert alert-success" role="alert">
+                    <i class="fas fa-check-circle me-2"></i>Tiền xử lý dữ liệu đã hoàn thành thành công!
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <h5>Thông tin cơ bản về dữ liệu</h5>
+                        {% if data_info %}
+                            <table class="table table-striped">
+                                <tr>
+                                    <th>Kích thước dữ liệu</th>
+                                    <td>{{ data_info.shape[0] }} hàng × {{ data_info.shape[1] }} cột</td>
+                                </tr>
+                                <tr>
+                                    <th>Số lượng đặc trưng</th>
+                                    <td>{{ data_info.columns|length }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Giá trị thiếu</th>
+                                    <td>
+                                        {% for col, count in data_info.missing_values.items() %}
+                                            {% if count > 0 %}
+                                                {{ col }}: {{ count }}<br>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                            </table>
+                        {% else %}
+                            <p>Không có thông tin dữ liệu.</p>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <h5>Các bước tiền xử lý đã thực hiện</h5>
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <i class="fas fa-check text-success me-2"></i>Làm sạch dữ liệu và xử lý giá trị thiếu
+                            </li>
+                            <li class="list-group-item">
+                                <i class="fas fa-check text-success me-2"></i>Phát hiện và xử lý ngoại lai với Isolation Forest
+                            </li>
+                            <li class="list-group-item">
+                                <i class="fas fa-check text-success me-2"></i>Mã hóa đặc trưng phân loại
+                            </li>
+                            <li class="list-group-item">
+                                <i class="fas fa-check text-success me-2"></i>Chuẩn hóa đặc trưng số
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="d-grid gap-2 col-md-6 mx-auto mt-4">
+                    <a href="{{ url_for('perform_clustering') }}" class="btn btn-primary">
+                        <i class="fas fa-arrow-right me-2"></i>Tiếp tục với phân cụm
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-chart-bar me-2"></i>Trực quan hóa dữ liệu
+            </div>
+            <div class="card-body">
+                <h5 class="mb-3">Biểu đồ phân tích dữ liệu</h5>
+                
+                {% if eda_images %}
+                    <div class="image-gallery">
+                        {% for image in eda_images %}
+                            <div class="gallery-item">
+                                <a href="{{ url_for('static', filename='images/eda/' + image) }}" target="_blank">
+                                    <img src="{{ url_for('static', filename='images/eda/' + image) }}" alt="{{ image }}" class="img-fluid">
+                                </a>
+                                <p class="text-center mt-2">{{ image.replace('_', ' ').replace('.png', '') }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p>Không có biểu đồ nào được tạo.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+
+{% block title %}Kết quả phân cụm - Phân tích khách hàng{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-check-circle me-2"></i>Kết quả phân cụm khách hàng
+            </div>
+            <div class="card-body">
+                <div class="alert alert-success" role="alert">
+                    <i class="fas fa-check-circle me-2"></i>Phân cụm khách hàng đã hoàn thành thành công!
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <h5>Thông tin phân cụm</h5>
+                        <table class="table table-striped">
+                            <tr>
+                                <th>Số cụm tối ưu</th>
+                                <td>{{ optimal_clusters }}</td>
+                            </tr>
+                            <tr>
+                                <th>Phương pháp giảm chiều</th>
+                                <td>t-SNE và PCA</td>
+                            </tr>
+                            <tr>
+                                <th>Thuật toán phân cụm</th>
+                                <td>K-means</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <h5>Tải xuống kết quả</h5>
+                        <a href="{{ url_for('download_results') }}" class="btn btn-primary">
+                            <i class="fas fa-download me-2"></i>Tải xuống dữ liệu đã phân cụm (CSV)
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-chart-scatter me-2"></i>Trực quan hóa phân cụm
+            </div>
+            <div class="card-body">
+                <h5 class="mb-3">Biểu đồ phân cụm tương tác</h5>
+                
+                <div class="row">
+                    <div class="col-md-12 mb-4">
+                        <div class="card">
+                            <div class="card-header">So sánh t-SNE và PCA</div>
+                            <div class="card-body">
+                                {% if 'comparison_clusters.html' in clustering_html %}
+                                    <div class="plot-container">
+                                        <iframe src="{{ url_for('visualization', filename='comparison_clusters.html') }}" width="100%" height="500px" frameborder="0"></iframe>
+                                    </div>
+                                {% else %}
+                                    <p>Biểu đồ so sánh không khả dụng.</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="card">
+                            <div class="card-header">Phân cụm với t-SNE</div>
+                            <div class="card-body">
+                                {% if 'tsne_clusters.html' in clustering_html %}
+                                    <div class="plot-container">
+                                        <iframe src="{{ url_for('visualization', filename='tsne_clusters.html') }}" width="100%" height="400px" frameborder="0"></iframe>
+                                    </div>
+                                {% else %}
+                                    <p>Biểu đồ t-SNE không khả dụng.</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-4">
+                        <div class="card">
+                            <div class="card-header">Phân cụm với PCA</div>
+                            <div class="card-body">
+                                {% if 'pca_clusters.html' in clustering_html %}
+                                    <div class="plot-container">
+                                        <iframe src="{{ url_for('visualization', filename='pca_clusters.html') }}" width="100%" height="400px" frameborder="0"></iframe>
+                                    </div>
+                                {% else %}
+                                    <p>Biểu đồ PCA không khả dụng.</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-table me-2"></i>Đặc điểm của các phân khúc khách hàng
+            </div>
+            <div class="card-body">
+                <h5 class="mb-3">Đặc điểm trung bình của các phân khúc</h5>
+                
+                <div class="table-responsive">
+                    {{ cluster_features|safe }}
+                </div>
+                
+                <h5 class="mt-4 mb-3">Biểu đồ đặc điểm phân khúc</h5>
+                
+                <div class="image-gallery">
+                    {% for image in clustering_images %}
+                        <div class="gallery-item">
+                            <a href="{{ url_for('static', filename='images/clustering/' + image) }}" target="_blank">
+                                <img src="{{ url_for('static', filename='images/clustering/' + image) }}" alt="{{ image }}" class="img-fluid">
+                            </a>
+                            <p class="text-center mt-2">{{ image.replace('_', ' ').replace('.png', '') }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+                
+                <h5 class="mt-4 mb-3">Biểu đồ radar đặc điểm phân khúc</h5>
+                
+                <div class="row">
+                    {% for i in range(optimal_clusters) %}
+                        {% if 'radar_cluster_' + i|string + '.html' in clustering_html %}
+                            <div class="col-md-4 mb-4">
+                                <div class="card">
+                                    <div class="card-header">Phân khúc {{ i }}</div>
+                                    <div class="card-body">
+                                        <div class="plot-container">
+                                            <iframe src="{{ url_for('visualization', filename='radar_cluster_' + i|string + '.html') }}" width="100%" height="300px" frameborder="0"></iframe>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-balance-scale me-2"></i>So sánh t-SNE và PCA
+            </div>
+            <div class="card-body">
+                <h5 class="mb-3">Kết quả so sánh</h5>
+                
+                <div class="table-responsive">
+                    {{ comparison|safe }}
+                </div>
+                
+                <div class="mt-4">
+                    <a href="{{ url_for('compare_methods') }}" class="btn btn-primary">
+                        <i class="fas fa-chart-bar me-2"></i>Xem biểu đồ so sánh chi tiết
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
