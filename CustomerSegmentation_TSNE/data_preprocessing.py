@@ -142,7 +142,8 @@ class DataPreprocessor:
             if missing_values[col] > 0:
                 print(f"Điền giá trị phổ biến nhất cho {col}")
                 most_frequent = self.raw_data[col].mode()[0]
-                self.raw_data[col].fillna(most_frequent, inplace=True)
+                # Sử dụng cách tiếp cận được khuyến nghị để tránh cảnh báo
+                self.raw_data[col] = self.raw_data[col].fillna(most_frequent)
                 
         return self.raw_data
     

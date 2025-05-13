@@ -3,6 +3,43 @@
 {% block title %}Phân cụm khách hàng - Phân tích khách hàng{% endblock %}
 
 {% block content %}
+<style>
+    #loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        flex-direction: column;
+        color: white;
+    }
+    
+    .spinner {
+        width: 80px;
+        height: 80px;
+        border: 8px solid #f3f3f3;
+        border-top: 8px solid #3498db;
+        border-radius: 50%;
+        animation: spin 2s linear infinite;
+        margin-bottom: 20px;
+    }
+    
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    
+    .progress-info {
+        font-size: 18px;
+        margin-top: 15px;
+        text-align: center;
+    }
+</style>
 <div class="row">
     <div class="col-md-12 mb-4">
         <div class="card">
@@ -42,7 +79,7 @@
                     <p>Phân tích đặc điểm của từng phân khúc khách hàng để hiểu rõ hơn về hành vi và đặc điểm của họ.</p>
                 </div>
                 
-                <form method="post" class="mt-4">
+                <form method="post" class="mt-4" id="clusteringForm">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
@@ -61,7 +98,7 @@
                     </div>
                     
                     <div class="d-grid gap-2 col-md-6 mx-auto">
-                        <button type="submit" class="btn btn-primary btn-lg">
+                        <button type="submit" class="btn btn-primary btn-lg" id="startClusteringBtn">
                             <i class="fas fa-play me-2"></i>Bắt đầu phân cụm
                         </button>
                         <p class="text-muted text-center mt-2">Quá trình này có thể mất vài phút tùy thuộc vào kích thước dữ liệu.</p>
@@ -114,4 +151,50 @@
         </div>
     </div>
 </div>
+
+<!-- Loading Overlay -->
+<div id="loading-overlay">
+    <div class="spinner"></div>
+    <h3>Đang phân tích dữ liệu...</h3>
+    <div class="progress-info" id="progress-status">Đang áp dụng t-SNE và K-means</div>
+    <div class="progress-info">Quá trình này có thể mất vài phút, vui lòng đợi</div>
+</div>
+
+<script>
+document.getElementById('clusteringForm').addEventListener('submit', function(e) {
+    // Hiển thị loading overlay
+    document.getElementById('loading-overlay').style.display = 'flex';
+    
+    // Cập nhật trạng thái tiến trình
+    let statusMessages = [
+        'Đang áp dụng t-SNE với perplexity ' + document.getElementById('perplexity').value,
+        'Đang tìm số cụm tối ưu...',
+        'Đang phân cụm dữ liệu với K-means...',
+        'Đang phân tích đặc điểm của các cụm...',
+        'Đang tạo biểu đồ trực quan...',
+        'Đang hoàn thiện kết quả phân tích...'
+    ];
+    
+    let currentStatus = 0;
+    let statusElement = document.getElementById('progress-status');
+    
+    // Cập nhật trạng thái mỗi 3 giây
+    let statusInterval = setInterval(function() {
+        statusElement.textContent = statusMessages[currentStatus];
+        currentStatus = (currentStatus + 1) % statusMessages.length;
+    }, 3000);
+    
+    // Lưu interval ID vào localStorage để có thể xóa nó nếu trang được tải lại
+    localStorage.setItem('statusIntervalId', statusInterval);
+});
+
+// Khi trang được tải, kiểm tra xem có interval cần xóa không
+window.addEventListener('load', function() {
+    let intervalId = localStorage.getItem('statusIntervalId');
+    if (intervalId) {
+        clearInterval(parseInt(intervalId));
+        localStorage.removeItem('statusIntervalId');
+    }
+});
+</script>
 {% endblock %}

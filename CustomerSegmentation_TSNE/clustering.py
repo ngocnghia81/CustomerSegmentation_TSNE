@@ -68,7 +68,7 @@ class CustomerClustering:
         
         return self.features
     
-    def apply_tsne(self, n_components=2, perplexity=30, learning_rate=200, n_iter=1000):
+    def apply_tsne(self, n_components=2, perplexity=30, learning_rate=200, max_iter=1000):
         """
         Áp dụng t-SNE để giảm chiều dữ liệu
         
@@ -80,7 +80,7 @@ class CustomerClustering:
             Perplexity cho t-SNE
         learning_rate : float, default=200
             Tốc độ học
-        n_iter : int, default=1000
+        max_iter : int, default=1000
             Số vòng lặp tối đa
             
         Returns:
@@ -96,7 +96,7 @@ class CustomerClustering:
             n_components=n_components,
             perplexity=perplexity,
             learning_rate=learning_rate,
-            n_iter=n_iter,
+            max_iter=max_iter,
             random_state=42
         )
         
