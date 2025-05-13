@@ -21,8 +21,8 @@ from clustering import CustomerClustering
 app = Flask(__name__)
 
 # Đường dẫn đến dữ liệu
-DATA_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'customer_São_Paulo_2024.csv')
-PROCESSED_DATA_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'processed_customer_data.csv')
+DATA_PATH = os.path.join('static', 'data', 'customer_São_Paulo_2024.csv')
+PROCESSED_DATA_PATH = os.path.join('static', 'data', 'processed_customer_data.csv')
 
 # Biến toàn cục để lưu trữ kết quả
 preprocessor = None
