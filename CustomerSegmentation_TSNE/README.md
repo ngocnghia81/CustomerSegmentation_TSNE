@@ -30,16 +30,15 @@ CustomerSegmentation_TSNE/
 │   │   └── clustering/         # Biểu đồ phân cụm
 │
 ├── templates/                  # Thư mục chứa các template HTML
-│   ├── base.html               # Template cơ sở
-│   ├── index.html              # Trang chủ
-│   ├── preprocess.html         # Trang tiền xử lý dữ liệu
-│   ├── preprocessing_results.html  # Trang kết quả tiền xử lý
-│   ├── clustering.html         # Trang phân cụm
-│   ├── clustering_results.html # Trang kết quả phân cụm
-│   ├── compare_methods.html    # Trang so sánh phương pháp
-│   └── about.html              # Trang giới thiệu
-│
-└── models/                     # Thư mục chứa các mô hình đã huấn luyện
+    ├── base.html               # Template cơ sở
+    ├── index.html              # Trang chủ
+    ├── preprocess.html         # Trang tiền xử lý dữ liệu
+    ├── preprocessing_results.html  # Trang kết quả tiền xử lý
+    ├── clustering.html         # Trang phân cụm
+    ├── clustering_results.html # Trang kết quả phân cụm
+    ├── compare_methods.html    # Trang so sánh phương pháp
+    └── about.html              # Trang giới thiệu
+
 ```
 
 ## Cài đặt
@@ -162,4 +161,4 @@ Biểu đồ Silhouette Score giúp đánh giá chất lượng phân cụm và 
 
 ## Tác giả
 
-Đồ án Khai phá dữ liệu - Ứng dụng kỹ thuật giảm chiều dữ liệu bằng t-SNE trong phân tích dữ liệu khách hàng
+Đồ án Khai phá dữ liệu - Ứng dụng kỹ thuật giảm chiều dữ liệu bằng t-SNE trong phân tích dữ liệu khách hàng của nhóm 7
