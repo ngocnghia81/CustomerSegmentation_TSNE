@@ -1,5 +1,8 @@
 import numpy as np
 import pandas as pd
+# Set non-interactive Matplotlib backend to avoid thread issues
+import matplotlib
+matplotlib.use('Agg')  # Use the 'Agg' backend which is non-interactive
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.manifold import TSNE

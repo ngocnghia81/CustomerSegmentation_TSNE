@@ -5,6 +5,9 @@ from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.impute import KNNImputer
 from sklearn.ensemble import IsolationForest
+# Set non-interactive Matplotlib backend to avoid thread issues
+import matplotlib
+matplotlib.use('Agg')  # Use the 'Agg' backend which is non-interactive
 import matplotlib.pyplot as plt
 import seaborn as sns
 import os

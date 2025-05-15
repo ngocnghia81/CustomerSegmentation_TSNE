@@ -10,6 +10,9 @@ from plotly.subplots import make_subplots
 import joblib
 import io
 import base64
+# Set non-interactive Matplotlib backend to avoid thread issues
+import matplotlib
+matplotlib.use('Agg')  # Use the 'Agg' backend which is non-interactive
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 import matplotlib.pyplot as plt
 import seaborn as sns
